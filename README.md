@@ -92,7 +92,31 @@ update_token
 `GET` `/users/{id}/`
 ##### Response
 ```yaml
-
+{
+    "success": true,
+    "data": [
+        {
+            "id": <ID>,
+            "first_name": <USER INPUT FOR FIRST_NAME>,
+            "last_name": <USER INPUT FOR LAST_NAME>,
+            "username": <USER INPUT FOR USERNAME>,
+            "phone_number": <USER INPUT FOR PHONE_NUMBER>,
+            "email": <USER INPUT FOR EMAIL>,
+            "posts": [ <SERIALIZED POSTS WITH BASIC INFO>, ... ],
+            "comments_posted": [ <SERIALIZED BASIC INFO OF COMMENTS>, ... ],
+            "communities": [ <SERIALIZED BASIC INFO OF COMMUNITIES>, ... ],
+            "chats": [ <SERIALIZED BASIC INFO OF CHATS>, ...],
+            "messages_sent": [ <SERIALIZED BASIC INFO OF MESSAGES SENT BY THE USER>, ...],
+            "messages_received": [ <SERIALIZED BASIC INFO OF MESSAGES RECEIVED BY THE USER>, ...]
+        }
+    ]
+}
+```
+### Update user
+`/POST/` `/users/{id}/`
+##### Response
+```yaml
+```
 
 
 
