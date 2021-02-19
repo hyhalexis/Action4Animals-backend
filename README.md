@@ -323,7 +323,7 @@ update_token
 }
 ```
 ### Create a post
-`/POST/` `/posts/`
+`/POST/` `/users/{id}/communities/{id}/posts/`
 ##### Request
 ```yaml
 {
@@ -468,7 +468,129 @@ update_token
     ]
 }
 ```
-###
+### Create a comment
+`/POST/` `/users/{user_id}/posts/{post_id}/comments/`
+##### Request
+```yaml
+{
+    "content": <USER INPUT FOR CONTENT>
+}
+```
+##### Response
+```yaml
+{
+    "success": true,
+    "data": {
+        "id": <ID>,
+        "timestamp": <NOW>",
+        "content": <USER INPUT FOR CONTENT>,
+        "edited": true
+        "commenter": {
+            "id": <ID>,
+            "first_name": <USER INPUT FOR FIRST_NAME>,
+            "last_name": <USER INPUT FOR LAST_NAME>,
+            "username": <USER INPUT FOR USERNAME>,
+            "phone_number": <USER INPUT FOR PHONE_NUMBER>,
+            "email": <USER INPUT FOR EMAIL>,
+        },
+        "post": {
+            "id": <ID>,
+            "timestamp": <POSTED TIME>,
+            "content": <USER INPUT FOR CONTENT>,
+            "edited": <EDITED>
+        }
+    }
+}
+```
+### Get a specific comment
+`/GET/` `/comments/{id}/`
+##### Response
+```yaml
+{
+    "success": true,
+    "data": {
+        "id": <ID>,
+        "timestamp": <NOW>",
+        "content": <USER INPUT FOR CONTENT>,
+        "edited": true
+        "commenter": {
+            "id": <ID>,
+            "first_name": <USER INPUT FOR FIRST_NAME>,
+            "last_name": <USER INPUT FOR LAST_NAME>,
+            "username": <USER INPUT FOR USERNAME>,
+            "phone_number": <USER INPUT FOR PHONE_NUMBER>,
+            "email": <USER INPUT FOR EMAIL>,
+        },
+        "post": {
+            "id": <ID>,
+            "timestamp": <POSTED TIME>,
+            "content": <USER INPUT FOR CONTENT>,
+            "edited": <EDITED>
+        }
+    }
+}
+```
+### Update a specific comment
+`/POST/` `/comments/{id}/`
+##### Request
+```yaml
+{
+    "content": <USER INPUT FOR CONTENT>
+}
+```
+##### Response
+```yaml
+{
+    "success": true,
+    "data": {
+        "id": <ID>,
+        "timestamp": <NOW>",
+        "content": <USER INPUT FOR CONTENT>,
+        "edited": true
+        "commenter": {
+            "id": <ID>,
+            "first_name": <USER INPUT FOR FIRST_NAME>,
+            "last_name": <USER INPUT FOR LAST_NAME>,
+            "username": <USER INPUT FOR USERNAME>,
+            "phone_number": <USER INPUT FOR PHONE_NUMBER>,
+            "email": <USER INPUT FOR EMAIL>,
+        },
+        "post": {
+            "id": <ID>,
+            "timestamp": <POSTED TIME>,
+            "content": <USER INPUT FOR CONTENT>,
+            "edited": <EDITED>
+        }
+    }
+}
+```
+### Delete a specific comment
+`/DELETE/` `/comments/{id}/
+```yaml
+{
+    "success": true,
+    "data": {
+        "id": <ID>,
+        "timestamp": <NOW>",
+        "content": <USER INPUT FOR CONTENT>,
+        "edited": true
+        "commenter": {
+            "id": <ID>,
+            "first_name": <USER INPUT FOR FIRST_NAME>,
+            "last_name": <USER INPUT FOR LAST_NAME>,
+            "username": <USER INPUT FOR USERNAME>,
+            "phone_number": <USER INPUT FOR PHONE_NUMBER>,
+            "email": <USER INPUT FOR EMAIL>,
+        },
+        "post": {
+            "id": <ID>,
+            "timestamp": <POSTED TIME>,
+            "content": <USER INPUT FOR CONTENT>,
+            "edited": <EDITED>
+        }
+    }
+}
+```
 
 
 
