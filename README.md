@@ -112,10 +112,57 @@ update_token
     ]
 }
 ```
-### Update user
+### Update a specific user
 `/POST/` `/users/{id}/`
+##### Request
+```yaml
+{
+    "first_name": <USER INPUT FOR FIRST_NAME>,
+    "last_name": <USER INPUT FOR LAST_NAME>,
+    "phone_number": <USER INPUT FOR PHONE_NUMBER>,
+    "email": <USER INPUT FOR EMAIL>,
+    "password": <USER INPUT FOR PASSWORD>
+}
+```
 ##### Response
 ```yaml
+{
+    "success": true,
+    "data": [
+        {
+            "id": <ID>,
+            "first_name": <USER INPUT FOR FIRST_NAME>,
+            "last_name": <USER INPUT FOR LAST_NAME>,
+            "username": <USER INPUT FOR USERNAME>,
+            "phone_number": <USER INPUT FOR PHONE_NUMBER>,
+            "email": <USER INPUT FOR EMAIL>
+        }
+    ]
+}
+```
+### Delete a specific user
+`/DELETE/` `/users/{id}/`
+##### Response
+```yaml
+{
+    "success": true,
+    "data": [
+        {
+            "id": <ID>,
+            "first_name": <USER INPUT FOR FIRST_NAME>,
+            "last_name": <USER INPUT FOR LAST_NAME>,
+            "username": <USER INPUT FOR USERNAME>,
+            "phone_number": <USER INPUT FOR PHONE_NUMBER>,
+            "email": <USER INPUT FOR EMAIL>
+        }
+    ]
+}
+```
+### Get all communities
+`/GET/` `/communities/`
+##### Response
+```yaml
+
 ```
 
 
