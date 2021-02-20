@@ -417,16 +417,6 @@ def recall_message(message_id):
         return failure_response("Message cannot be recalled.")
     return success_response(message)
 
-@app.route("/messages/<int:message_id>/add/", methods=["POST"])
-def add_user_to_message_receiver(message_id):
-    body = json.loads(request.data)
-    message = dao.add_user_to_message_receiver(message_id, body)
-    if message is None:
-        return failure_response("User or message not found.")
-    if message == "sender error":
-        return failure_response("Cannot add sender as receiver")
-    return success_response(message)
-
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
