@@ -85,9 +85,7 @@ class User(db.Model):
             "id": self.id,
             "first_name": self.first_name,
             "last_name": self.last_name,
-            "username": self.username,
-            "phone_number": self.phone_number,
-            "email": self.email
+            "username": self.username
         }
 
     def _urlsafe_base_64(self):
