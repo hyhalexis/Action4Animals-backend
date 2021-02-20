@@ -356,15 +356,13 @@ update_token
         "content": <USER INPUT FOR CONTENT>,
         "edited": <EDITED>
         "poster": {
-            "id": <ID>,
+            "id": <USER_ID>,
             "first_name": <USER INPUT FOR FIRST_NAME>,
             "last_name": <USER INPUT FOR LAST_NAME>,
-            "username": <USER INPUT FOR USERNAME>,
-            "phone_number": <USER INPUT FOR PHONE_NUMBER>,
-            "email": <USER INPUT FOR EMAIL>,
+            "username": <USER INPUT FOR USERNAME>
         },
         "community": {
-            "id": <ID>,
+            "id": <COMMUNITY_ID>,
             "name": <USER INPUT FOR NAME>
         },
         "comments": [ <SERIALIZED BASIC INFO OF COMMENT>, ...],
@@ -390,15 +388,13 @@ update_token
         "content": <USER INPUT FOR CONTENT>,
         "edited": true
         "poster": {
-            "id": <ID>,
+            "id": <USER_ID>,
             "first_name": <USER INPUT FOR FIRST_NAME>,
             "last_name": <USER INPUT FOR LAST_NAME>,
-            "username": <USER INPUT FOR USERNAME>,
-            "phone_number": <USER INPUT FOR PHONE_NUMBER>,
-            "email": <USER INPUT FOR EMAIL>,
+            "username": <USER INPUT FOR USERNAME>
         },
         "community": {
-            "id": <ID>,
+            "id": <COMMUNITY_ID>,
             "name": <USER INPUT FOR NAME>
         },
         "comments": [ <SERIALIZED BASIC INFO OF COMMENT>, ...],
@@ -418,15 +414,13 @@ update_token
         "content": <USER INPUT FOR CONTENT>,
         "edited": true
         "poster": {
-            "id": <ID>,
+            "id": <USER_ID>,
             "first_name": <USER INPUT FOR FIRST_NAME>,
             "last_name": <USER INPUT FOR LAST_NAME>,
-            "username": <USER INPUT FOR USERNAME>,
-            "phone_number": <USER INPUT FOR PHONE_NUMBER>,
-            "email": <USER INPUT FOR EMAIL>,
+            "username": <USER INPUT FOR USERNAME>
         },
         "community": {
-            "id": <ID>,
+            "id": <COMMUNITY_ID>,
             "name": <USER INPUT FOR NAME>
         },
         "comments": [ <SERIALIZED BASIC INFO OF COMMENT>, ...],
@@ -486,15 +480,13 @@ update_token
         "content": <USER INPUT FOR CONTENT>,
         "edited": true
         "commenter": {
-            "id": <ID>,
+            "id": <USER_ID>,
             "first_name": <USER INPUT FOR FIRST_NAME>,
             "last_name": <USER INPUT FOR LAST_NAME>,
-            "username": <USER INPUT FOR USERNAME>,
-            "phone_number": <USER INPUT FOR PHONE_NUMBER>,
-            "email": <USER INPUT FOR EMAIL>,
+            "username": <USER INPUT FOR USERNAME>
         },
         "post": {
-            "id": <ID>,
+            "id": <POST_ID>,
             "timestamp": <POSTED TIME>,
             "content": <USER INPUT FOR CONTENT>,
             "edited": <EDITED>
@@ -514,15 +506,13 @@ update_token
         "content": <USER INPUT FOR CONTENT>,
         "edited": true
         "commenter": {
-            "id": <ID>,
+            "id": <USER_ID>,
             "first_name": <USER INPUT FOR FIRST_NAME>,
             "last_name": <USER INPUT FOR LAST_NAME>,
-            "username": <USER INPUT FOR USERNAME>,
-            "phone_number": <USER INPUT FOR PHONE_NUMBER>,
-            "email": <USER INPUT FOR EMAIL>,
+            "username": <USER INPUT FOR USERNAME>
         },
         "post": {
-            "id": <ID>,
+            "id": <POST_ID>,
             "timestamp": <POSTED TIME>,
             "content": <USER INPUT FOR CONTENT>,
             "edited": <EDITED>
@@ -548,15 +538,13 @@ update_token
         "content": <USER INPUT FOR CONTENT>,
         "edited": true
         "commenter": {
-            "id": <ID>,
+            "id": <USER_ID>,
             "first_name": <USER INPUT FOR FIRST_NAME>,
             "last_name": <USER INPUT FOR LAST_NAME>,
-            "username": <USER INPUT FOR USERNAME>,
-            "phone_number": <USER INPUT FOR PHONE_NUMBER>,
-            "email": <USER INPUT FOR EMAIL>,
+            "username": <USER INPUT FOR USERNAME>
         },
         "post": {
-            "id": <ID>,
+            "id": <POST_ID>,
             "timestamp": <POSTED TIME>,
             "content": <USER INPUT FOR CONTENT>,
             "edited": <EDITED>
@@ -575,15 +563,13 @@ update_token
         "content": <USER INPUT FOR CONTENT>,
         "edited": true
         "commenter": {
-            "id": <ID>,
+            "id": <USER_ID>,
             "first_name": <USER INPUT FOR FIRST_NAME>,
             "last_name": <USER INPUT FOR LAST_NAME>,
-            "username": <USER INPUT FOR USERNAME>,
-            "phone_number": <USER INPUT FOR PHONE_NUMBER>,
-            "email": <USER INPUT FOR EMAIL>,
+            "username": <USER INPUT FOR USERNAME>
         },
         "post": {
-            "id": <ID>,
+            "id": <POST_ID>,
             "timestamp": <POSTED TIME>,
             "content": <USER INPUT FOR CONTENT>,
             "edited": <EDITED>
@@ -591,6 +577,146 @@ update_token
     }
 }
 ```
+### Get all tags
+`/GET/` `/tags/`
+##### Response
+```yaml
+{
+    "success": true,
+    "data": [
+        {
+            "id": 1,
+            "description": "welcome home",
+            "posts": [ <SERIALIZED BASIC INFO OF POST>, ...]
+        }
+        ...
+    ]
+}
+```
+### Create a tag
+`/POST/` `/tags/`
+##### Request
+```yaml
+{
+    "description": <USER INPUT FOR DESCRIPTION>
+}
+```
+##### Response
+```yaml
+{
+    "success": true,
+    "data": [
+        {
+            "id": <ID>,
+            "description": <USER INPUT FOR DESCRIPTION>,
+            "posts": [ <SERIALIZED BASIC INFO OF POST>, ...]
+        }
+    ]
+}
+```
+### Get a specific tag
+`/GET/` `/tags/{id}/`
+##### Response
+```yaml
+{
+    "success": true,
+    "data": [
+        {
+            "id": <ID>,
+            "description": <USER INPUT FOR DESCRIPTION>,
+            "posts": [ <SERIALIZED BASIC INFO OF POST>, ...]
+        }
+    ]
+}
+```
+### Update a specific tag
+`/POST/` `/tags/{id}/`
+##### Request
+```yaml
+{
+    "description": <USER INPUT FOR DESCRIPTION>
+}
+```
+##### Response
+```yaml
+{
+    "success": true,
+    "data": {
+        "id": 1,
+        "description": "sweet bean",
+        "posts": [ <SERIALIZED BASIC INFO OF POST>, ...]
+    }
+}
+```
+### Delete a specific tag
+`/DELETE/` `/tags/{id}/`
+##### Response
+```yaml
+{
+    "success": true,
+    "data": {
+        "id": 1,
+        "description": "sweet bean",
+        "posts": [ <SERIALIZED BASIC INFO OF POST>, ...]
+    }
+}
+```
+### Add a tag to a post
+`/POST/` `/posts/{id}/add/`
+##### Request
+```yaml
+{
+    "tag_id": <USER INPUT FOR TAG_ID>
+}
+```
+##### Response
+```yaml
+{
+    "success": true,
+    "data": {
+        "id": <POST_ID>,
+        "timestamp": <POSTED TIME>,
+        "content": <USER INPUT FOR CONTENT>,
+        "edited": <EDITED>,
+        "poster": {
+            "id": <USER_ID>,
+            "first_name": <USER INPUT FOR FIRST_NAME>,
+            "last_name": <USER INPUT FOR LAST_NAME>,
+            "username": <USER INPUT FOR USERNAME>
+        },
+        "community": {
+            "id": <COMMUNIRY_ID>,
+            "name": <USER INPUT FOR NAME>
+        },
+        "comments": [ <SERIALIZED BASIC INFO OF COMMENT>, ...],
+        "tags": [
+            {
+                "id": <TAG_ID>,
+                "description": <USER INPUT FOR DESCRIPTION>
+            }
+        ]
+    }
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
