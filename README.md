@@ -609,7 +609,7 @@ update_token
         {
             "id": <ID>,
             "description": <USER INPUT FOR DESCRIPTION>,
-            "posts": [ <SERIALIZED BASIC INFO OF POST>, ...]
+            "posts": []
         }
     ]
 }
@@ -754,8 +754,8 @@ update_token
             "id": <COMMUNITY_ID>,
             "name": <USER INPUT FOR NAME>
         },
-        "users": [ <SERIALIZED BASIC INFO OF USER>, ...],
-        "messages": [ <SERIALIZED BASIC INFO OF MESSAGE>, ...]
+        "users": [],
+        "messages": []
     }
 }
 ```
