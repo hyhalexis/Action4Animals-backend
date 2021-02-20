@@ -362,6 +362,8 @@ def add_user_to_chat(chat_id):
     chat = dao.add_user_to_chat(chat_id, body)
     if chat is None:
         return failure_response("Chat or user not found.")
+    if chat == "not in community":
+        return failure_response("User is not a member of the community.")
     return success_response(chat)
 
 @app.route("/chats/<int:chat_id>/remove/", methods=["POST"])
@@ -399,6 +401,8 @@ def get_all_messages_received_by_user(user_id):
 def create_message(chat_id):
     body = json.loads(request.data)
     message = dao.create_message(chat_id, body)
+    if message is None:
+        return failure_response("Sender not in chat.")
     return success_response(message)
 
 @app.route("/messages/<int:message_id>/")
