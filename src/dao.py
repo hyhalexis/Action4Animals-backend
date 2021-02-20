@@ -122,7 +122,7 @@ def delete_post(post_id):
     db.session.commit()
     return post.serialize()
 
-def get_all_comments_for_post(post_id):
+def get_all_comments_of_post(post_id):
     post = Post.query.filter_by(id=post_id).first()
     if post is None:
         return None
