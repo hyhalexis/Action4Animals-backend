@@ -698,25 +698,289 @@ update_token
     }
 }
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+### Get all chats in a specific community
+`/GET/` `/communities/{id}/chats/`
+##### Response
+```yaml
+{
+    "success": true,
+    "data": [
+        {
+            "id": 1,
+            "community": {
+                "id": <COMMUNITY_ID>,
+                "name": <USER INPUT FOR NAME>
+            },
+            "users": [ <SERIALIZED BASIC INFO OF USER>, ...]
+        }
+        ...
+    ]
+}
+```
+### Get all chats of a specific user
+`/GET/` `/users/{id}/chats/`
+##### Response
+```yaml
+{
+    "success": true,
+    "data": [
+        {
+            "id": 1,
+            "community": {
+                "id": <COMMUNITY_ID>,
+                "name": <USER INPUT FOR NAME>
+            },
+            "users": [ <SERIALIZED BASIC INFO OF USER>, ...]
+        }
+        ...
+    ]
+}
+```
+### Create a chat
+`/POST/` `/chats/`
+##### Request
+```yaml
+{
+    "community_id": <USER INPUT FOR COMMUNITY_ID>
+}
+```
+##### Response
+```yaml
+{
+    "success": true,
+    "data": {
+        "id": <ID>,
+        "community": {
+            "id": <COMMUNITY_ID>,
+            "name": <USER INPUT FOR NAME>
+        },
+        "users": [ <SERIALIZED BASIC INFO OF USER>, ...],
+        "messages": [ <SERIALIZED BASIC INFO OF MESSAGE>, ...]
+    }
+}
+```
+### Get a specific chat
+`/GET/` `/chats/{id}/`
+##### Response
+```yaml
+{
+    "success": true,
+    "data": {
+        "id": <ID>,
+        "community": {
+            "id": <COMMUNITY_ID>,
+            "name": <USER INPUT FOR NAME>
+        },
+        "users": [ <SERIALIZED BASIC INFO OF USER>, ...],
+        "messages": [ <SERIALIZED BASIC INFO OF MESSAGE>, ...]
+    }
+}
+```
+### Delete a specific chat
+`/DELETE/` `/chats/{id}/`
+##### Response
+```yaml
+{
+    "success": true,
+    "data": {
+        "id": <ID>,
+        "community": {
+            "id": <COMMUNITY_ID>,
+            "name": <USER INPUT FOR NAME>
+        },
+        "users": [ <SERIALIZED BASIC INFO OF USER>, ...],
+        "messages": [ <SERIALIZED BASIC INFO OF MESSAGE>, ...]
+    }
+}
+```
+### Add a specific user to a chat
+`/POST/` `/chats/{id}/add/`
+##### Request
+```yaml
+{
+    "user_id": <USER INPUT FOR USER_ID>
+}
+```
+##### Response
+```yaml
+{
+    "success": true,
+    "data": {
+        "id": <ID>,
+        "community": {
+            "id": <COMMUNITY_ID>,
+            "name": <USER INPUT FOR NAME>
+        },
+        "users": [ <SERIALIZED BASIC INFO OF USER>, ...],
+        "messages": [ <SERIALIZED BASIC INFO OF MESSAGE>, ...]
+    }
+}
+```
+### Remove a specific user from a chat
+`/POST/` `/chats/{id}/remove/`
+##### Request
+```yaml
+{
+    "user_id": <USER INPUT FOR USER_ID>
+}
+```
+##### Response
+```yaml
+{
+    "success": true,
+    "data": {
+        "id": <ID>,
+        "community": {
+            "id": <COMMUNITY_ID>,
+            "name": <USER INPUT FOR NAME>
+        },
+        "users": [ <SERIALIZED BASIC INFO OF USER>, ...],
+        "messages": [ <SERIALIZED BASIC INFO OF MESSAGE>, ...]
+    }
+}
+```
+### Get all messages in a specific chat
+`/GET/` `/chats/{id}/messages/`
+##### Response
+```yaml
+{
+    "success": true,
+    "data": [
+        {
+            "id": 1,
+            "timestamp": <SENT TIME>,
+            "content": <USER INPUT FOR CONTENT>
+        }
+        ...
+    ]
+}
+```
+### Get all messages sent by a specific user
+`/GET/` `/users/{id}/messages/sent/`
+##### Response
+```yaml
+{
+    "success": true,
+    "data": [
+        {
+            "id": 1,
+            "timestamp": <SENT TIME>,
+            "content": <USER INPUT FOR CONTENT>
+        }
+        ...
+    ]
+}
+```
+### Get all messages received by a specific user
+`/GET/` `/users/{id}/messages/received/`
+##### Response
+```yaml
+{
+    "success": true,
+    "data": [
+        {
+            "id": 1,
+            "timestamp": <SENT TIME>,
+            "content": <USER INPUT FOR CONTENT>
+        }
+        ...
+    ]
+}
+```
+### Send a message in the chat
+`/POST/` `/chats/{id}/messages/`
+##### Request
+```yaml
+{
+    "content": <USER INPUT FOR CONTENT>,
+    "sender_id": <USER INPUT FOR SENDER_ID>
+}
+```
+##### Response
+```yaml
+{
+    "success": true,
+    "data": {
+        "id": <ID>,
+        "timestamp": <NOW>,
+        "content": <USER INPUT FOR CONTENT>,,
+        "sender": {
+            "id": <USER INPUT FOR SENDER_ID>,
+            "first_name": <USER INPUT FOR FIRST_NAME>,
+            "last_name": <USER INPUT FOR LAST_NAME>,
+            "username": <USER INPUT FOR USERNAME>,
+            "phone_number": <USER INPUT FOR PHONE_NUMBER> ,
+            "email": <USER INPUT FOR EMAIL>
+        },
+        "receivers": [],
+        "chat": {
+            "id": <CHAT_ID>,
+            "community": {
+                "id": <COMMUNITY_ID>,
+                "name": <USER INPUT FOR NAME>
+            },
+            "users": [ <SERIALIZED BASIC INFO OF USER>, ...]
+        }
+    }
+}
+```
+### Get a specific message
+`/GET/` `/messages/{id}/`
+##### Response
+```yaml
+{
+    "success": true,
+    "data": {
+        "id": <ID>,
+        "timestamp": <NOW>,
+        "content": <USER INPUT FOR CONTENT>,,
+        "sender": {
+            "id": <USER INPUT FOR SENDER_ID>,
+            "first_name": <USER INPUT FOR FIRST_NAME>,
+            "last_name": <USER INPUT FOR LAST_NAME>,
+            "username": <USER INPUT FOR USERNAME>,
+            "phone_number": <USER INPUT FOR PHONE_NUMBER> ,
+            "email": <USER INPUT FOR EMAIL>
+        },
+        "receivers": [],
+        "chat": {
+            "id": <CHAT_ID>,
+            "community": {
+                "id": <COMMUNITY_ID>,
+                "name": <USER INPUT FOR NAME>
+            },
+            "users": [ <SERIALIZED BASIC INFO OF USER>, ...]
+        }
+    }
+}
+```
+### Delete a specific message
+`/DELETE/` `/messages/{id}/`
+##### Response
+```yaml
+{
+    "success": true,
+    "data": {
+        "id": <ID>,
+        "timestamp": <NOW>,
+        "content": <USER INPUT FOR CONTENT>,,
+        "sender": {
+            "id": <USER INPUT FOR SENDER_ID>,
+            "first_name": <USER INPUT FOR FIRST_NAME>,
+            "last_name": <USER INPUT FOR LAST_NAME>,
+            "username": <USER INPUT FOR USERNAME>,
+            "phone_number": <USER INPUT FOR PHONE_NUMBER> ,
+            "email": <USER INPUT FOR EMAIL>
+        },
+        "receivers": [],
+        "chat": {
+            "id": <CHAT_ID>,
+            "community": {
+                "id": <COMMUNITY_ID>,
+                "name": <USER INPUT FOR NAME>
+            },
+            "users": [ <SERIALIZED BASIC INFO OF USER>, ...]
+        }
+    }
+}
+```
