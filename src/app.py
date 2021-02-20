@@ -36,6 +36,75 @@ def failure_response(message, code=404):
 def header():
     return ("An app developed to facilitate animal adoption.")
 
+@app.route("/register/", methods=["POST"])
+def register_account():
+    body = json.loads(request.data)
+    first_name = body.get("first_name")
+    last_name = body.get("last_name")
+    username = body.get("username")
+    phone_number = body.get("phone_number")
+    email = body.get("email")
+    password = body.get("password")
+
+    if first_name is None or last_name is None or username is None or phone_number is None or email is None or password is None:
+        return json.dumps({"error": "Invalid input."})
+    created, user = users_dao.create_user(first_name, last_name, username, phone_number, email, password)
+    if not created:
+        return json.dumps({"error": "User already exists."})
+    return json.dumps({
+        "session_token": user.session_token,
+        "session_expiration": str(user.session_expiration),
+        "update_token": user.update_token,
+    })
+
+@app.route("/login/", methods=["POST"])
+def login():
+    body = json.loads(request.data)
+    username = body.get("username")
+    password = body.get("password")
+
+    if username is None or password is None:
+        return json.dumps({"error": "Invalid username or password."})
+    successful, user = users_dao.verify_credentials(username, password)
+    if not successful:
+        return json.dumps({"error": "Incorrect username or password."})
+    return json.dumps(
+        {
+            "session_token": user.session_token,
+            "session_expiration": str(user.session_expiration),
+            "update_token": user.update_token,
+        }
+    )
+
+@app.route("/session/", methods=["POST"])
+def update_session():
+    successful, update_token = extract_token(request)
+    if not successful:
+        return update_token
+    try:
+        user = users_dao.renew_session(update_token)
+    except Exception as e:
+        return json.dumps({"error": f"Invalid update token: {str(e)}"})
+    return json.dumps(
+        {
+            "session_token": user.session_token,
+            "session_expiration": str(user.session_expiration),
+            "update_token": user.update_token,
+        }
+    )
+
+@app.route("/secret/", methods=["GET"])
+def secret_message():
+    successful, session_token = extract_token(request)
+    if not successful:
+        return session_token
+    user = users_dao.get_user_by_session_token(session_token)
+    if not user or not user.verify_session_token(session_token):
+        return json.dumps({"error": "Invalid session token."})
+    return json.dumps({
+        "message": "You have successfully implemented sessions"}
+    )
+
 @app.route("/users/")
 def get_all_users():
     return success_response(dao.get_all_users())
@@ -48,6 +117,13 @@ def create_user():
 
 @app.route("/users/<int:user_id>/")
 def get_user_by_id(user_id):
+    successful, session_token = extract_token(request)
+    if not successful:
+        return session_token
+    user = users_dao.get_user_by_session_token(session_token)
+    if not user or not user.verify_session_token(session_token):
+        return json.dumps({"error": "Invalid session token."})
+
     user = dao.get_user_by_id(user_id)
     if user is None:
         return failure_response("User not found.")
@@ -55,6 +131,13 @@ def get_user_by_id(user_id):
 
 @app.route("/users/<int:user_id>/", methods=["POST"])
 def update_user(user_id):
+    successful, session_token = extract_token(request)
+    if not successful:
+        return session_token
+    user = users_dao.get_user_by_session_token(session_token)
+    if not user or not user.verify_session_token(session_token):
+        return json.dumps({"error": "Invalid session token."})
+
     body = json.loads(request.data)
     user = dao.update_user(user_id, body)
     if user is None:
@@ -63,6 +146,13 @@ def update_user(user_id):
 
 @app.route("/users/<int:user_id>/", methods=["DELETE"])
 def delete_user(user_id):
+    successful, session_token = extract_token(request)
+    if not successful:
+        return session_token
+    user = users_dao.get_user_by_session_token(session_token)
+    if not user or not user.verify_session_token(session_token):
+        return json.dumps({"error": "Invalid session token."})
+
     user = dao.delete_user(user_id)
     if user is None:
         return failure_response("User not found.")
@@ -151,8 +241,8 @@ def delete_post(post_id):
     return success_response(post)
 
 @app.route("/posts/<int:post_id>/comments/")
-def get_all_comments_for_post(post_id):
-    comments = dao.get_all_comments_for_post(post_id)
+def get_all_comments_of_post(post_id):
+    comments = dao.get_all_comments_of_post(post_id)
     if comments is None:
         return failure_response("Post not found.")
     return success_response(comments)
@@ -336,75 +426,6 @@ def add_user_to_message_receiver(message_id):
     if message == "sender error":
         return failure_response("Cannot add sender as receiver")
     return success_response(message)
-
-@app.route("/register/", methods=["POST"])
-def register_account():
-    body = json.loads(request.data)
-    first_name = body.get("first_name")
-    last_name = body.get("last_name")
-    username = body.get("username")
-    phone_number = body.get("phone_number")
-    email = body.get("email")
-    password = body.get("password")
-
-    if first_name is None or last_name is None or username is None or phone_number is None or email is None or password is None:
-        return json.dumps({"error": "Invalid input."})
-    created, user = users_dao.create_user(first_name, last_name, username, phone_number, email, password)
-    if not created:
-        return json.dumps({"error": "User already exists."})
-    return json.dumps({
-        "session_token": user.session_token,
-        "session_expiration": str(user.session_expiration),
-        "update_token": user.update_token,
-    })
-
-@app.route("/login/", methods=["POST"])
-def login():
-    body = json.loads(request.data)
-    username = body.get("username")
-    password = body.get("password")
-
-    if username is None or password is None:
-        return json.dumps({"error": "Invalid username or password."})
-    successful, user = users_dao.verify_credentials(username, password)
-    if not successful:
-        return json.dumps({"error": "Incorrect username or password."})
-    return json.dumps(
-        {
-            "session_token": user.session_token,
-            "session_expiration": str(user.session_expiration),
-            "update_token": user.update_token,
-        }
-    )
-
-@app.route("/session/", methods=["POST"])
-def update_session():
-    successful, update_token = extract_token(request)
-    if not successful:
-        return update_token
-    try:
-        user = users_dao.renew_session(update_token)
-    except Exception as e:
-        return json.dumps({"error": f"Invalid update token: {str(e)}"})
-    return json.dumps(
-        {
-            "session_token": user.session_token,
-            "session_expiration": str(user.session_expiration),
-            "update_token": user.update_token,
-        }
-    )
-
-@app.route("/secret/", methods=["GET"])
-def secret_message():
-    successful, session_token = extract_token(request)
-    if not successful:
-        return session_token
-    user = users_dao.get_user_by_session_token(session_token)
-    if not user or not user.verify_session_token(session_token):
-        return json.dumps({"error": "Invalid session token."})
-    return json.dumps({
-        "message": "You have successfully implemented sessions"}
-    )
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
