@@ -300,6 +300,11 @@ def create_message(chat_id, body):
         sender_id = body.get("sender_id"),
         chat_id = chat_id
     )
+    chat = Chat.query.filter_by(id=chat_id).first()
+    sender = User.query.filter_by(id=body.get("sender_id")).first()
+    for user in chat.users:
+        if user is not sender:
+            user.messages_received.append(message)
     db.session.add(message)
     db.session.commit()
     return message.serialize()
@@ -322,16 +327,3 @@ def recall_message(message_id):
     db.session.commit()
     return message.serialize()
 
-def add_user_to_message_receiver(message_id, body):
-    message = Message.query.filter_by(id=message_id).first()
-    if message is None:
-        return None
-    user_id = body.get("user_id")
-    if user_id == message.sender_id:
-        return "sender error"
-    user = User.query.filter_by(id=user_id).first()
-    if user is None:
-        return None
-    message.receivers.append(user)
-    db.session.commit()
-    return message.serialize()
