@@ -257,6 +257,9 @@ def add_user_to_chat(chat_id, body):
     user = User.query.filter_by(id=user_id).first()
     if user is None:
         return None
+    community = Community.query.filter_by(id=chat.community_id).first()
+    if user not in community.users:
+        return "not in community"
     chat.users.append(user)
     db.session.commit()
     return chat.serialize()
@@ -302,6 +305,8 @@ def create_message(chat_id, body):
     )
     chat = Chat.query.filter_by(id=chat_id).first()
     sender = User.query.filter_by(id=body.get("sender_id")).first()
+    if sender not in chat.users:
+        return None
     for user in chat.users:
         if user is not sender:
             user.messages_received.append(message)
